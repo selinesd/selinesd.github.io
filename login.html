@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log-In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: whitesmoke;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #1d34b8, #9c27b0);
+        }
+
+        .wrapper {
+            background-color: whitesmoke;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 600px;
+            display: flex;
+            gap: 20px; 
+            align-items: center;
+        }
+
+        .logo {
+            width: 230px;
+            height: 150px;
+        }
+
+        .form-container {
+            flex: 2; 
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+        .input-box span {
+            display: block;
+            font-size: 14px;
+            color: #1d34b8;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .input-box input {
+            width: 320px;
+            padding: 10px;
+            border: 2px solid #1d34b8;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: #9c27b0;
+            box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .btn {
+            background-color: #1d34b8;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            flex: 1;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #9c27b0;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            padding: 15px;
+            border: 2px solid red;
+            background-color: #f8d7da;
+            border-radius: 5px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo-container {
+                margin-bottom: 20px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo"><img src="logosss.fw.png" alt="" class="logo"></div>
+        </div>
+
+        <div class="form-container">
+            
+            <div id="error-message" class="error-message">
+                Usuario o contraseña incorrectos. Por favor, verifica tus datos.
+            </div>
+
+            <form action="validacionRoles.php" method="post">
+                <div class="input-box">
+                    <span>Nombre de Usuario</span>
+                    <input type="email" name="Correo" placeholder="usuario@gmail.com" required>
+                </div>
+                <div class="input-box">
+                    <span>Contraseña</span>
+                    <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" oninput="validatePassword()" required>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="btn">Login</button>
+                    <button type="reset" class="btn">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function validatePassword() {
+            const password = document.getElementById('contraseña').value;
+            const errorMessage = document.getElementById('password-error');
+            const regex = /^[a-zA-Z0-9!@#$%^&*()_+=\-{}\[\]:\";'<>?,.\/]*$/;
+            if (password.length < 8) {
+                errorMessage.textContent = "La contraseña debe tener al menos 8 caracteres.";
+            } else if (!regex.test(password)) {
+                errorMessage.textContent = "La contraseña solo puede contener letras, números y símbolos permitidos.";
+            } else {
+                errorMessage.textContent = ""; 
+            }
+        }
+
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('error') && urlParams.get('error') === 'usuario_no_encontrado') {
+                document.getElementById('error-message').style.display = 'block';
+                setTimeout(function() {
+                    document.getElementById('error-message').style.display = 'none';
+                }, 5000); 
+            }
+
+            window.history.pushState(null, null, window.location.href);
+            window.addEventListener('popstate', function () {
+                window.history.pushState(null, null, window.location.href);
+            });
+        }
+    </script>
+</body>
+</html>

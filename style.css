@@ -1,0 +1,742 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+#logo{
+  width: 300px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1d34b8;
+  color: white;
+  padding: 10px 20px;
+}
+
+.navbar .menu-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.navbar .profile {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: white;
+}
+
+.container {
+  display: flex;
+}
+
+.sidebar {
+  overflow-y: auto;
+  width: 250px;
+  background-color: #9c27b0;
+  color: white;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(96vh - 50px);
+  transition: all 0.3s ease; 
+}
+
+.sidebar.closed {
+  width: 60px; 
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative; 
+  transition: color 0.3s ease; 
+}
+
+.sidebar ul li:hover {
+  color: #00bcd4;
+}
+
+.sidebar ul li::after {
+  content: "";
+  position: absolute;
+  bottom: 0; 
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #00bcd4; 
+  transition: width 0.3s ease; 
+}
+
+.sidebar ul li:hover::after {
+  width: 100%; 
+}
+
+.sidebar ul li span {
+  transition: transform 0.3s ease; 
+}
+
+.sidebar ul li:hover span {
+  transform: scale(1.1);
+}
+.sidebar ul li i {
+  margin-right: 10px;
+  margin: 16px;
+}
+
+.sidebar.closed ul li span {
+  display: none; 
+}
+
+.sidebar ul .logout-option {
+  margin-top: 20px; 
+  text-align: center;
+}
+
+.sidebar ul .logout-option a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  display: block;
+  background-color: #9c27b0; 
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+
+
+/* MENU DE PERFIL*/
+.profile {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profile-picture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 1000;
+  width: 200px;
+  padding: 10px;
+}
+
+.profile-menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-menu-picture {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+#username {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0;
+  color: #9c27b0;
+}
+
+.profile-menu button {
+  margin: 5px 0;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.profile-menu button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Estilos para el cuadro de confirmación  (cerrar sesion)*/
+#confirmacion {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px 40px;
+  text-align: center;
+  z-index: 1000;
+  width: 400px;
+  font-size: 18px;
+}
+
+#confirmacion button {
+  margin: 10px;
+  padding: 15px 25px;
+  cursor: pointer;
+  border: none;
+}
+
+#confirmacion button:first-child {
+  background-color: whitesmoke;
+  color: black  ;
+}
+
+#confirmacion button:last-child {
+  background-color: whitesmoke;
+  color: black;
+}
+
+#confirmacion button:hover{
+  background-color: #9c27b0;
+  color: white;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5); 
+  z-index: 999; 
+}
+
+
+/* Bienvenida */
+.main-content {
+  flex: 1;
+  padding: 0;
+  text-align: center;
+  background-color: #f5f5f5; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-height: calc(100vh - 50px); 
+  overflow-y: auto;
+}
+
+.main-content h1 {
+  font-size: 48px;
+  color: #1d34b8; 
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.main-content p {
+  font-size: 20px;
+  color: #555555; 
+  margin: 10px 0;
+}
+
+.main-content p:nth-child(2) {
+  font-size: 24px; 
+  font-weight: bold;
+  color: #9c27b0; 
+  }
+
+.main-content p:nth-child(3) {
+  font-size: 18px;
+  font-style: italic;
+  color: #616161; 
+}
+
+/*Sidebar*/
+.sidebar {
+  width: 250px;
+  transition: width 0.3s;
+}
+
+.sidebar.collapsed {
+  width: 60px; /* Solo muestra íconos */
+}
+
+.sidebar ul li span {
+  display: inline-block;
+  margin-left: 10px;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.sidebar.collapsed ul li span {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none; /* No permite clics en los textos ocultos */
+}
+
+
+
+/* REGISTRAR ESTUDIANTE */
+form {
+width: 1000px; 
+max-height: calc(100vh - 70px); 
+overflow-y: auto;
+margin: 0;
+padding: 20px;
+display: block; 
+}
+
+form h2 {
+color: #1d34b8;
+margin-bottom: 20px;
+text-align: left; 
+}
+
+form .form-group {
+margin-bottom: 15px;
+padding: 0;
+}
+
+form .form-group label.nombre  {
+position: relative;
+right: 5px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.fechaIngreso{
+position: relative;
+left: 100px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top;
+} 
+
+form .form-group label.curso  {
+position: relative;
+left: 120px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.seccion  {
+position: relative;
+left: 60px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.nivel  {
+position: relative;
+right: 10px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.fechaNacimiento  {
+position: relative;
+right: 60px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.edad  {
+position: relative;
+right: 30px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.sexo  {
+position: relative;
+left: 70px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.motivo  {
+position: relative;
+right: 200px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.sintomas  {
+position: relative;
+left: 20px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.medicamentos  {
+position: relative;
+right: 150px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 300px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.procedimiento  {
+position: relative;
+right: 30px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 200px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.padres  {
+position: relative;
+right: 10px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 300px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.telefono  {
+position: relative;
+left: 10px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 300px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group label.antecedentes,
+form .form-group label.antecedentesPersonale {
+  font-weight: bold;
+  color: #555;
+  display: block;
+  margin-bottom: 2px;
+}
+
+form .form-group label.checkbox-label {
+  margin-left: 5px;
+}
+
+form .form-group input[type="checkbox"] {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+form .form-group label.diagnostico  {
+position: relative;
+left: 10px;
+font-weight: bold;
+color: #555;
+text-align: left;
+display: inline-block;
+width: 300px; 
+margin-bottom: 5px;
+vertical-align: top; 
+}
+
+form .form-group input[type="date"]{
+padding: 9px;
+margin-top: 5px;
+border: 1px solid #ccc;
+border-radius: 4px;
+display: inline-block;
+width: 200px;
+}
+
+form .form-group input[type="tel"]{
+padding: 9px;
+margin-top: 5px;
+border: 1px solid #ccc;
+border-radius: 4px;
+display: inline-block;
+width: 300px;
+}
+
+form .form-group input, 
+form .form-group textarea, 
+form .form-group select {
+padding: 9px;
+margin-top: 5px;
+border: 1px solid #ccc;
+border-radius: 4px;
+display: inline-block;
+}
+
+form .form-group input[type="text"], 
+form .form-group input[type="email"], 
+form .form-group input[type="number"] {
+width: 300px;
+}
+
+form .form-group input[type="password"] {
+width: 300px; 
+}
+
+form .form-group select {
+width: 150px; 
+}
+
+form .form-group textarea {
+width: 400px; 
+height: 150px; 
+}
+
+form .form-group input[type="checkbox"] {
+width: auto;
+}
+
+form .form-group .checkbox-label {
+margin-left: 5px;
+font-weight: normal;
+}
+
+form .form-group button {
+width: 170px;
+padding: 10px;
+margin: 7px;
+background-color: #1d34b8;
+color: white;
+font-weight: bold;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+float: right;
+}
+
+form .form-group button:hover {
+background-color: #9c27b0;
+}
+
+table{
+width: 1000px; 
+max-height: calc(100vh - 70px); 
+overflow-y: auto;
+display: block; 
+background-color: white;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+border-radius: 8px;
+border-collapse: collapse;
+}
+h2{
+color: black;
+}
+thead {
+background-color: rgb(240, 195, 240);
+}
+thead th {
+text-align: left;
+color: black;
+padding: 12px;
+text-transform: uppercase;
+font-size: 14px;
+width: 1000px;
+}
+tbody tr {
+border-bottom: 1px solid #ddd;
+}
+tbody tr:hover {
+background-color: #f2f2f2;
+}
+tbody td {
+padding: 12px;
+color: #333;
+font-size: 14px;
+}
+tbody tr:last-child {
+border-bottom: none;
+}
+
+.pagination {
+margin-top: 20px;
+text-align: center;
+}
+
+.pagination button {
+margin: 0 5px;
+padding: 10px;
+border-radius: 10px;
+border: 1px solid #ccc;
+background-color: #f0f0f0;
+cursor: pointer;
+}
+
+.pagination button.active {
+background-color: #030a94;
+color: white;
+}
+
+.pagination button:hover {
+background-color: rgb(72, 62, 212);
+}
+
+/*Estadisticas*/
+#statisticsContent {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background-color: #f9f9f9;
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 20px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+margin-top: 20px;
+max-width: 700px;
+}
+
+#chartbar {
+max-width: 100%;
+height: auto;
+}
+
+.form-container {
+  background-color: #f9f9ff;
+  border: 2px solid #6a0dad; 
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  color: #003366 
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #003366;
+}
+
+form input,
+form select {
+  width: 500px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Botón */
+form button {
+  width: 100%;
+  background-color: #6a0dad; 
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #450a73; 
+}
+
+/*-----------------------*/
+.foto-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.foto-container img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+.foto-container label {
+  margin-top: 10px;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+.foto-container label:hover {
+  background-color: #0056b3;
+}
+
